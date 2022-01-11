@@ -1,0 +1,31 @@
+.main-login {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  background-color: #C9C9C9;
+  height: 100%;
+}
+
+.welcome {
+  font-weight: 700;
+}
+
+.login {
+  padding: 30px;
+  border-radius: 20px;
+  background: #fff;
+}
+
+button {
+  float: right;
+}
+
+.error {
+  color: red;
+}

@@ -1,0 +1,22 @@
+<div class="main-login">
+  <form class="login">
+      <section class="title">
+          <h2 class="welcome">Bem-vindo ao Anotaí</h2>
+          <p class="hint">Insira seu email e senha para acessar o sistema:</p>
+      </section>
+      <div class="login-group">
+          <mat-form-field style="width: 100%;">
+              <mat-label>Email</mat-label>
+              <input matInput name="email" [(ngModel)]="email">
+          </mat-form-field>
+          <mat-form-field style="width: 100%;">
+              <mat-label>Senha</mat-label>
+              <input matInput type="password" name="password" [(ngModel)]="password">
+          </mat-form-field>
+          <div class="error active" *ngIf="invalidAuth">
+              Nome de usuário ou senha inválidos
+          </div>
+          <button mat-raised-button style="background-color: #efbb40;" (click)="auth()">Entrar</button>
+      </div>
+  </form>
+</div>

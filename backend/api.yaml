@@ -1,0 +1,321 @@
+swagger: "2.0"
+info:
+  description: "APP - Anotaí - Sistema desenvolvido ao longo da disciplina de TecWeb - UFSJ"
+  version: "1.0.0"
+  title: "Anotaí"
+  contact:
+    email: "felipefrmelo@hotmail.com"
+basePath: "/v1"
+tags:
+- name: "task"
+  description: "Tudo sobre as tarefas"
+- name: "list"
+  description: "Acesso às listas de tarefas e suas respectivas tarefas"
+- name: "user"
+  description: "Operações para criação e autenticação de usuário"
+schemes:
+- "http"
+paths:
+  /tasks:
+    get:
+        tags:
+        - "task"
+        summary: "Busca tarefas"
+        operationId: "getTasks"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "date"
+          in: "query"
+          description: "Data estabelecida como prazo da tarefa"
+          required: false
+          type: "string"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              $ref: "#/definitions/Task"
+          "400":
+            description: "Invalid date supplied"
+    post:
+      tags:
+      - "task"
+      summary: "Adiciona uma nova tarefa"
+      operationId: "addTask"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto task a ser adicionado"
+        required: true
+        schema:
+          $ref: "#/definitions/Task"
+      responses:
+        "405":
+          description: "Invalid input"
+  /tasks/{taskId}:
+    delete:
+      tags:
+      - "task"
+      summary: "Remove uma tarefa pelo ID"
+      operationId: "removeTask"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "taskId"
+        in: "path"
+        description: "ID da tarefa a ser removida"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid ID supplied"
+        "500":
+          description: "internal server error"
+    put:
+      tags:
+      - "task"
+      summary: "Atualiza uma tarefa"
+      operationId: "updateTask"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "taskId"
+        in: "path"
+        description: "ID da tarefa a ser atualizada"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Objeto da tarefa atualizada"
+        required: true
+        schema:
+          $ref: "#/definitions/Task"
+      responses:
+        "201":
+          description: "successful operation"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Task not found"
+  /lists:
+    get:
+      tags:
+      - "list"
+      summary: "Retorna informações de todas listas do usuário"
+      operationId: "getLists"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/List"
+    post:
+      tags:
+        - "list"
+      summary: "Cria uma nova lista"
+      operationId: "createList"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "informações da lista a ser criada"
+        required: true
+        schema:
+          $ref: "#/definitions/List"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/List"
+        "400":
+          description: "Já existe uma lista com este nome"
+  /lists/{listId}:
+    get:
+      tags:
+      - "list"
+      summary: "Retorna as tarefas de uma determinada lista"
+      operationId: "getTasksFromList"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "listId"
+        in: "path"
+        description: "ID da lista a buscada"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Task"
+    put:
+      tags:
+      - "list"
+      summary: "Atualiza as informações de uma determinada lista"
+      operationId: "updateList"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "listId"
+        in: "path"
+        description: "ID da lista a atualizada"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Objeto da lista atualizada"
+        required: true
+        schema:
+          $ref: "#/definitions/List"
+      responses:
+        "201":
+          description: "successful operation"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "List not found"
+    delete:
+      tags:
+      - "list"
+      summary: "Remove uma lista pelo ID"
+      operationId: "removeList"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "listId"
+        in: "path"
+        description: "ID da tarefa a ser removida"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid ID supplied"
+        "500":
+          description: "internal server error"
+  /user/login:
+    post:
+      tags:
+      - "user"
+      summary: "Autentica o usuário no sistema"
+      operationId: "login"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto contendo as credenciais do usuário"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "string"
+        "400":
+          description: "Invalid username/password supplied"
+  /user/logout:
+    post:
+      tags:
+      - "user"
+      summary: "Encerra a sessão do usuário no sistema"
+      operationId: "logout"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "successful operation"
+  /user/register:
+    post:
+      tags:
+      - "user"
+      summary: "Cria uma conta de usuário no sistema"
+      operationId: "register"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto contendo as informações do usuário"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "201":
+          description: "successful operation"
+          schema:
+            type: "string"
+        "400":
+          description: "email already in use"
+definitions:
+  List:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      userId:
+        type: "integer"
+      status:
+        type: "string"
+        enum:
+        - "done"
+        - "todo"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+  Task:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      description:
+        type: "string"
+      listId:
+        type: "integer"
+      userId:
+        type: "integer"
+      date:
+        type: "string"
+      status:
+        type: "string"
+        enum:
+        - "done"
+        - "todo"

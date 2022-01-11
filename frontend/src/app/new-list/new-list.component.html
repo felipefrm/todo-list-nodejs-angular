@@ -1,0 +1,18 @@
+<div class="content">
+  <div class="modal-box">
+    <h1 class="title">
+      Adicionar uma nova lista de tarefas
+    </h1>
+    <form class="form">
+      <mat-form-field appearance="fill">
+        <mat-label>Nome da lista</mat-label>
+        <input #listNameInput matInput placeholder="Insira o nome da lista...">
+      </mat-form-field>
+      <div>
+        <button mat-raised-button routerLink="/lists">Cancelar</button>
+        <button mat-raised-button style="background-color: #efbb40;" (click)="createNewList(listNameInput.value)">Adicionar</button>
+      </div>
+    </form>
+
+  </div>
+</div>

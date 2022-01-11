@@ -1,0 +1,52 @@
+<div class="content">
+
+  <div class="task-manager-container">
+
+    <div class="sidebar">
+
+      <h1 class="title">
+        Listas
+      </h1>
+
+      <div class="list-menu">
+        <a class="list-menu-item" *ngFor="let list of lists" [routerLink]="['/lists', list.id]" routerLinkActive="active">
+          <p>{{ list.name }}</p>
+        </a>
+      </div>
+      <button id="add-list-button" mat-raised-button aria-label="Criar nova lista" routerLink="/new-list"><mat-icon>add</mat-icon>Criar nova lista</button>
+    </div>
+
+    <div class="task-list-container">
+      <div *ngIf="tasks">
+        <div class="header">
+          <h1 class="title">Tarefas</h1>
+          <div class="buttons">
+            <button mat-button aria-label="Editar lista" color='primary' [routerLink]="['/edit-list', selectedListId]"><mat-icon>edit</mat-icon> Editar lista</button>
+            <button mat-button aria-label="Deletar lista" color='warn' (click)="onDeleteListClick()"><mat-icon>delete</mat-icon> Remover lista</button>
+          </div>
+        </div>
+        <div class="task" *ngFor="let task of tasks" (click)="onTaskClick(task)">
+          <p [ngClass]="{'completed': task.status == 'done' ? 1 : 0}">{{ task.description }}</p>
+          <div class="edit-delete">
+            <button mat-icon-button aria-label="Editar" color='primary' [routerLink]="['/lists', selectedListId, 'edit-task', task.id]">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Deletar" color='warn' (click)="onDeleteTaskClick(task.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="tasks.length == 0">
+          <h2 class="info-text">Adicione uma tarefa para ela aparecer aqui.</h2>
+        </div>
+      </div>
+      <div *ngIf="!tasks">
+        <h2 class="info-text">Selecione uma lista na barra lateral.</h2>
+      </div>
+
+        <div class="button-group" *ngIf="tasks">
+          <button id="add-task-button" mat-raised-button aria-label="Adicionar nova tarefa" routerLink="./new-task"><mat-icon>add</mat-icon> Adicionar nova tarefa</button>
+        </div>
+    </div>
+  </div>
+</div>
