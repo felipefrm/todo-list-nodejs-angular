@@ -46,10 +46,10 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 #### Web Screenshot
 <div>
-   <img src="./.github/login.png" width="400px">
-   <img src="./.github/home.png" width="400px">
-   <img src="./.github/lista.png" width="400px">
-   <img src="./.github/nova_tarefa.png" width="400px">
+   <img src="./.github/login.png" >
+   <img src="./.github/home.png" >
+   <img src="./.github/lista.png" >
+   <img src="./.github/nova_tarefa.png" >
 </div>
 
 <a id="como-usar"></a>
